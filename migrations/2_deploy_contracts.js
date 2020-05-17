@@ -21,7 +21,7 @@ const nftPrice = 20;
 
 module.exports = function(deployer) {
   deployer.deploy(SafeMath)
-  .then(() => deployer.link(SafeMath, [Counters, ERC20, ERC223, ERC721, Marketplace, FTCrowdsale]))
+  .then(() => deployer.link(SafeMath, [Counters, ERC20, ERC223, ERC721, MarketplaceA, MarketplaceB]))
   .then(() => deployer.deploy(Counters))
   .then(() => deployer.link(Counters, ERC721))
   .then(() => deployer.deploy(Address))
@@ -32,6 +32,6 @@ module.exports = function(deployer) {
   .then(() => deployer.link(ERC223, MarketplaceB))
   .then(() => deployer.deploy(ERC721))
   .then(() => deployer.link(ERC721, [MarketplaceA, MarketplaceB]))
-  .then(() => deployer.deploy(MarketplaceA, ERC20.address, nftPrice))
-  .then(() => deployer.deploy(MarketplaceB, ERC223.address, nftPrice));
+  .then(() => deployer.deploy(MarketplaceA, ERC721.address, ERC20.address, nftPrice))
+  .then(() => deployer.deploy(MarketplaceB, ERC721.address, ERC223.address, nftPrice));
 };
