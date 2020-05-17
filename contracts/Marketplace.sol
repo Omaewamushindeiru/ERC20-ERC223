@@ -6,6 +6,7 @@ import "./ERC721.sol";
 import "./FongibleToken.sol";
 
 contract Marketplace is Ownable{
+    using SafeMath for uint;
 
     uint private _currentId;
 
@@ -21,7 +22,7 @@ contract Marketplace is Ownable{
     }
 
     function purchaseNFT(address to) public returns (bool) {
-        require(_token.balanceOf(msg.sender) >= _nftPrice, "not enough peels owned");
+        require(_token.balanceOf(msg.sender) >= _nftPrice, "not enough token owned");
 
         _token.transfer(_token.owner(), _nftPrice);
 

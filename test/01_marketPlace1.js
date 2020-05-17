@@ -19,17 +19,23 @@ contract('Testing Markeplace 1 (ERC20)', function (accounts) {
         // Deploying contract
         ERC20Instance = await ERC20.new( nameA, tickerA, totalSupplyA, decimalsA, {from: accounts[0]});
         ERC721Instance = await ERC721.new({from: accounts[0]});
-        MarketPlaceInstance = await marketPlace.new(ERC20Instance, ERC721Instance, nftPrice, {from: accounts[0]});
+        MarketPlaceInstance = await marketPlace.new(ERC20Instance.address, ERC721Instance.address, nftPrice, {from: accounts[0]});
     })
+
+    // Tests routines start with "it"
+    it('purchase token', async function (){
 
     // Creating an artist profile
     // function createConcert(uint _artistId, uint _venueId, uint _concertDate, uint _ticketPrice)
-    await MarketPlaceInstance.purchaseNFT(accounts[1], {from: accounts[0]}); 
+    await MarketPlaceInstance.purchaseNFT(accounts[0], {from: accounts[0]}); 
 
     // Retrieving newly created artists info
     retrievedERC721Info = await ERC721Instance._tokenOwner(1);
 
     // Checking the artists names
-    assert.equal(web3.utils.toUtf8(retrievedERC721Info),accounts[1])
+    assert.equal(web3.utils.toUtf8(retrievedERC721Info),accounts[0])
 
+
+
+    })
 })
